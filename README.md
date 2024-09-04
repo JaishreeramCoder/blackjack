@@ -9,3 +9,5 @@ The model was evaluated over multiple games with the following outcomes:
 * Draw Rate: 5.889%
 
 * Loss Rate: 51.687%
+## Future Work
+Implement Q-Learning, SARSA, Expected SARSA, and other Deep RL algorithms for enhanced training
