@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/ba33cd55-b3c2-44c0-8ab7-2031ce36fcb4)# Blackjack Monte Carlo RL Model
+# Blackjack Monte Carlo RL Model
 
 This project implements a Monte Carlo-based Reinforcement Learning (RL) model to learn an optimal strategy for playing a simplified version of Blackjack. The model is trained over millions of episodes using a custom Gymnasium environment and is evaluated using win/loss/draw metrics along with a visual strategy chart.
 
