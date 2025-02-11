@@ -79,7 +79,8 @@ The game rewards (or penalties) are based on typical Blackjack outcomes:
 
 - **Training Process:**
   - **Method:** First–visit Monte Carlo control with an epsilon–greedy policy.
-  - **Episodes:** The model is trained over 10 million episodes (you can adjust this for testing).
+  - **Episodes:** The model is trained over 10 million episodes.
+  - **Discount factor:** is equal to 0
   - **Updates:**  
     - For each episode, state–action pairs are stored.
     - After the episode ends, the Q-values are updated based on the final reward.
@@ -89,9 +90,9 @@ The game rewards (or penalties) are based on typical Blackjack outcomes:
 - **Evaluation:**
   - **Policy:** A greedy policy (epsilon = 0) is used for evaluation.
   - **Metrics:**  
-    - Win percentage (games where the net profit is positive)
-    - Loss percentage (games with a net loss)
-    - Draw percentage (games where profit is zero)
+    - Win percentage (games where the net profit is positive) = 41.03 %
+    - Loss percentage (games with a net loss) = 51.04 %
+    - Draw percentage (games where profit is zero) = 7.93 %
   - **Graphing:** A graph plots the cumulative loss percentage against the number of evaluation games played.
 
 ### C. Strategy Visualization
