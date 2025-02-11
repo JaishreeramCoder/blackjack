@@ -80,7 +80,7 @@ The game rewards (or penalties) are based on typical Blackjack outcomes:
 - **Training Process:**
   - **Method:** First–visit Monte Carlo control with an epsilon–greedy policy.
   - **Episodes:** The model is trained over 10 million episodes.
-  - **Discount factor:** is equal to 0
+  - **Discount factor:** is equal to 1
   - **Updates:**  
     - For each episode, state–action pairs are stored.
     - After the episode ends, the Q-values are updated based on the final reward.
