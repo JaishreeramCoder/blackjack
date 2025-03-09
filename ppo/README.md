@@ -11,10 +11,12 @@ This repository implements a custom Blackjack environment that integrates card c
 - [Evaluation](#evaluation)
 - [Web Application](#web-application)
 
+<a id="introduction"></a>
 ## Introduction 🚀
 
 In previous experiments using Monte Carlo methods (e.g., in the `blackjack-v1` and `blackjack-with-extended-action-space-and-rewards` models), card counting was not permitted, and the best average reward per bet percentage achieved was **-0.45%**. However, allowing card counting dramatically increases the state space to almost 1e9 unique states, making table-based approaches infeasible. This repository uses Deep RL methods like PPO to overcome the state-space explosion and improve the average reward per bet, ultimately yielding a long-run profitable strategy for the player. 💰
 
+<a id="environment-description"></a>
 ## Environment Description 📝
 
 The custom environment, `BlackjackEnvWithCounting`, is built using the Gymnasium framework. It extends the classic Blackjack game by incorporating card counting. Key features include:
@@ -45,15 +47,18 @@ The custom environment, `BlackjackEnvWithCounting`, is built using the Gymnasium
 
 A custom wrapper, `BetInfoWrapper`, augments the environment by attaching bet information to episode statistics, and the `RecordEpisodeStatistics` wrapper logs performance metrics. 📊
 
+<a id="training"></a>
 ## Training ⚙️
 
 Training the PPO model required significant computational resources (totaling nearly 20 hours), so the process was split into two phases:
 
+<a id="phase-1"></a>
 ### Phase 1 ⏱️
 - **Timesteps**: 10,000,000 (≈8,000,000 episodes)
 - **Learning Rate Schedule**: Utilized a cosine learning rate scheduler decaying from a maximum of 1e-4 to a minimum of 1e-6.
 - **Performance**: Achieved an average reward per bet percentage of **0.3%** during evaluation.
 
+<a id="phase-2-final-model"></a>
 ### Phase 2 (Final Model) 🔥
 - **Timesteps**: 20,000,000 (≈15,100,000 episodes)
 - **Process**: The phase-1 model was loaded and further trained.
@@ -63,6 +68,7 @@ Training the PPO model required significant computational resources (totaling ne
 
 The training code integrates a custom cosine learning rate schedule and logs performance metrics (reward/ bet ratio) over episodes.
 
+<a id="evaluation"></a>
 ## Evaluation 📈
 
 The evaluation process involves:
@@ -74,6 +80,7 @@ The evaluation process involves:
 
 Evaluation scripts also render graphical outputs (plots and tables) and save the results for further analysis. 🖼️
 
+<a id="web-application"></a>
 ## Web Application 🌐
 
 A Streamlit web application is available for real-time predictions from the trained model.  
