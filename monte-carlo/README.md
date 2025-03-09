@@ -92,7 +92,7 @@ The game rewards (or penalties) are based on typical Blackjack outcomes:
     - Win percentage (games where the net profit is positive)
     - Loss percentage (games with a net loss)
     - Draw percentage (games where profit is zero)
-  - **Graphing:** A graph plots the cumulative loss percentage against the number of evaluation games played.
+  - **Graphing:** A graph plots the Average Reward per Bet percentage across all of evaluation games played.
 
 ### C. Strategy Visualization
 
