@@ -73,7 +73,6 @@ The training code integrates a custom cosine learning rate schedule and logs per
 
 The evaluation process involves:
 - Running the trained model over 100,000 episodes.
-- Logging individual episode rewards and bet amounts.
 - Calculating win, draw, and loss percentages.
 - Plotting the cumulative reward/ bet ratio over time.
 - Generating a summary table of key evaluation metrics.
