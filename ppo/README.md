@@ -10,6 +10,9 @@ This repository implements a custom Blackjack environment that integrates card c
   - [Phase 2 (Final Model)](#phase-2-final-model)
 - [Evaluation](#evaluation)
 - [Web Application](#web-application)
+- [Additional Models & Results](#additional-models--results)
+- [Conclusion](#conclusion)
+ 
 
 <a id="introduction"></a>
 ## Introduction 🚀
@@ -88,3 +91,35 @@ Access the web app here: [https://..link] 🔗
 To run the app locally:
 ```bash
 streamlit run app.py
+```
+
+<a id="additional-models--results"></a>
+## Additional Models & Results 🔍
+
+### Basic Environment (`blackjackv1`)
+- **Description**: The most basic state available by default in stable-baseline.
+- **Model Training**:  
+  - **Timesteps**: 20,000,000 (≈12,000,000 episodes)
+  - **Performance**:  
+    - Win Percentage: **43.12%**
+    - Average Reward per Bet: **-4.57%**
+- **Observations**:  
+  The performance is similar to that of the Monte Carlo method for this environment. However, the average reward per bet of -4.57% is not as good as in other environments. This is primarily because this basic environment does not allow 1.5x or 2x rewards, which could have significantly improved the average reward per bet. Additionally, further training for an extra 20,000,000 time steps did not lead to improvements, suggesting model convergence.  
+- **Learning Rate Schedule**:  
+  Utilized a cosine learning rate scheduler with a minimum learning rate of 1e-6 and a maximum learning rate of 1e-4.
+
+### Moderately Complex Environment (Expanded Reward Structure)
+- **Description**: This state allows 4 actions and incorporates a more expanded reward structure. Previously, this environment was used with the Monte Carlo method without card counting.
+- **Model Training**:  
+  - **Timesteps**: 20,000,000
+  - **Performance**:  
+    - Win Percentage: **38.47%**
+    - Average Reward per Bet: **-0.99%**
+- **Observations**:  
+  The performance is not as favorable compared to the Monte Carlo method for a similar environment. This discrepancy might be due to the lower number of episodes. There is a plan to further train this model for an additional 20,000,000 time steps, using a cosine learning rate scheduler between 1e-6 and 1e-7, to potentially improve performance.
+
+> **Note:** These additional models are placed inside the `additional-models` folder of the repository.
+
+<a id="conclusion"></a>
+## Conclusion 🎯✅💡
+The results indicate that in blackjack environments where card counting is not allowed, the performance of the Monte Carlo method and Proximal Policy Optimization (PPO) is similar. Therefore, using PPO in these scenarios may not provide significant advantages over traditional methods. However, if card counting is permitted, it is recommended to utilize deep reinforcement learning models such as PPO, Deep Q-Network (DQN), and Group Relative Policy Optimization (GRPO).
