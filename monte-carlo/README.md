@@ -109,7 +109,7 @@ The game rewards (or penalties) are based on typical Blackjack outcomes:
     - Each cell is annotated with the optimal action (HIT, STK, DBL, or SUR).
     - A custom legend maps colors to actions.
   - **Strategy Chart:**
-    - ![Strategy Chart1](https://github.com/JaishreeramCoder/blackjack/blob/master/monte-carlo/strategy-chart/strategy_chart1.png)
+    - ![monte-carlo-blackjack-v1](https://github.com/JaishreeramCoder/blackjack/blob/master/monte-carlo/strategy-chart-visualization/monte-carlo-blackjack-v1.png)
 
-    - ![Strategy Chart1](https://github.com/JaishreeramCoder/blackjack/blob/master/monte-carlo/strategy-chart/strategy_chart2.png)
+    - ![monte-carlo-with-extended-action-space-and-rewards](https://github.com/JaishreeramCoder/blackjack/blob/master/monte-carlo/strategy-chart/monte-carlo-with-extended-action-space-and-rewards.png)
 
