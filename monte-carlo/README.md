@@ -1,37 +1,47 @@
-# Blackjack Monte Carlo RL Model
+# Blackjack Monte Carlo RL Model 🎲
 
-This project implements a Monte Carlo-based Reinforcement Learning (RL) model to learn an optimal strategy for playing a simplified version of Blackjack. The model is trained over millions of episodes using a custom Gymnasium environment and is evaluated using win/loss/draw metrics along with a visual strategy chart.
+This project implements a Monte Carlo-based Reinforcement Learning (RL) model to learn an optimal strategy for playing a simplified version of Blackjack. The model is trained over millions of episodes using a custom Gymnasium environment and is evaluated using win/loss/draw metrics along with visual strategy charts. 📊
 
 ## Overview
 
 The project is divided into three main parts:
 1. **Blackjack Environment:** A custom Gymnasium-based environment that simulates a simplified Blackjack game.
 2. **Model Training & Evaluation:** A Monte Carlo control method with an epsilon–greedy policy is used to train the agent. Evaluation metrics are computed and plotted.
-3. **Strategy Visualization:** The learned strategy is visualized using heatmaps for both "hard" and "soft" player totals.
+3. **Strategy Visualization:** The learned strategy is visualized using heatmaps for both models:
+    - The extended-action model (with HIT, STK, DBL, and SUR actions) 🃏
+    - The simpler blackjack-v1 model (with just HIT and STK actions) 🎴
 
 ---
 
 ## 1. Available Actions
 
-The actions available to the agent in the game are:
+### Extended–Action Model
 
 - **HIT (0):**  
-  Request another card from the dealer.
-
+  Request another card from the dealer. ➕
+  
 - **STK (1):**  
-  Stand (do not take any more cards).
-
+  Stand (do not take any more cards). ✋
+  
 - **DBL (2):**  
-  Double Down – double your wager, take exactly one additional card, and then stand.
-
+  Double Down – double your wager, take exactly one additional card, and then stand. 🔥
+  
 - **SUR (3):**  
-  Surrender – forfeit half of your wager and end the game immediately.
+  Surrender – forfeit half of your wager and end the game immediately. 🙅
 
 > **Note:** On the first move, all four actions are available. In subsequent moves, only HIT and STK are allowed.
 
+### Simple blackjack-v1 Model
+
+- **HIT (1):**  
+  Request another card from the dealer. ➕
+  
+- **STK (0):**  
+  Stand (do not take any more cards). ✋
+
 ---
 
-## 2. Reward Structure
+## 2. Reward Structure 💰
 
 The game rewards (or penalties) are based on typical Blackjack outcomes:
 
@@ -62,14 +72,18 @@ The game rewards (or penalties) are based on typical Blackjack outcomes:
 
 ---
 
-## 3. Code Flow
+## 3. Code Flow 🔄
 
 ### A. Building the Blackjack Environment
 
 - **Implementation:**  
   A custom `BlackjackEnv` class is created using Gymnasium. It defines:
-  - **Action Space:** Four discrete actions (HIT, STK, DBL, SUR).
-  - **Observation Space:** A tuple containing the player's current sum, the dealer’s upcard, a flag indicating if a usable ace is present, and a flag indicating if it’s the first move.
+  - **Action Space (Extended–Action Model):**  
+    Four discrete actions: HIT, STK, DBL, SUR.
+  - **Observation Space (Extended–Action Model):**  
+    A tuple containing the player's current sum, the dealer’s upcard, a flag indicating if a usable ace is present, and a flag indicating if it’s the first move.
+  - **Observation Space (Simple blackjack-v1 Model):**  
+    A tuple containing the player's current sum (4–21), the dealer’s upcard (1–10), and a flag for a usable ace.
   - **Game Logic:**  
     - **Card Drawing & Hand Management:** Functions to draw a card, generate a hand, and calculate the hand's total with consideration for a usable ace.
     - **Player Actions:** The `step` function implements the game dynamics for each possible action.
@@ -80,7 +94,7 @@ The game rewards (or penalties) are based on typical Blackjack outcomes:
 - **Training Process:**
   - **Method:** First–visit Monte Carlo control with an epsilon–greedy policy.
   - **Episodes:** The model is trained over 10 million episodes.
-  - **Discount factor:** is equal to 1
+  - **Discount Factor:** 1
   - **Updates:**  
     - For each episode, state–action pairs are stored.
     - After the episode ends, the Q-values are updated based on the final reward.
@@ -93,23 +107,37 @@ The game rewards (or penalties) are based on typical Blackjack outcomes:
     - Win percentage (games where the net profit is positive)
     - Loss percentage (games with a net loss)
     - Draw percentage (games where profit is zero)
-  - **Graphing:** A graph plots the Average Reward per Bet percentage across all of evaluation games played.
+  - **Graphing:** A graph plots the Average Reward per Bet percentage across all evaluation games played.
 
 ### C. Strategy Visualization
 
 - **Extracting the Strategy:**
-  - The final strategy is derived for two types of player hands:
-    - **Hard Totals:** Player sums from 5 to 20 (no usable ace).
-    - **Soft Totals:** Player sums from 13 to 20 (with a usable ace).
-  - For each state (defined by player total, dealer upcard, usable ace flag, and first move), the action with the highest Q-value is chosen.
 
-- **Visualizing the Strategy:**
-  - **Heatmaps:** Seaborn's heatmap functionality is used to generate visual strategy charts.
-  - **Annotations & Legend:**  
-    - Each cell is annotated with the optimal action (HIT, STK, DBL, or SUR).
-    - A custom legend maps colors to actions.
-  - **Strategy Chart:**
-    - ![monte-carlo-blackjack-v1](https://github.com/JaishreeramCoder/blackjack/blob/master/monte-carlo/strategy-chart-visualization/monte-carlo-blackjack-v1.png)
+  #### Extended–Action Model:
+  - **State Space:**  
+    `[player sum (2–21), dealer sum (1–10 with Ace as 1), usable ace flag (0 or 1), first move flag (0 for subsequent moves, 1 for the first move)]`
+    - For **usable ace = 0:** The player sum is calculated directly (values from 2 to 20; 21 is terminal).
+    - For **usable ace = 1:** The saved player sum is between 2 and 10, but the actual sum is computed as `saved_sum + 10` (thus displayed as 12–20).
+  - **Action Selection:**  
+    - **First Move:** Allowed actions are HIT, STK, DBL, and SUR.
+    - **Subsequent Moves:** Only HIT and STK are allowed.
+  - **Visualization:**  
+    The strategy is visualized using heatmaps where rows represent the actual player sum and columns represent the dealer’s showing card (with 1 displayed as “A”). Each cell is annotated with the optimal action. An improved color grading (using the "viridis" palette) enhances visual differentiation. 🎨
 
-    - ![monte-carlo-with-extended-action-space-and-rewards](https://github.com/JaishreeramCoder/blackjack/blob/master/monte-carlo/strategy-chart/monte-carlo-with-extended-action-space-and-rewards.png)
+  #### Simple blackjack-v1 Model:
+  - **State Space:**  
+    `[player current sum (4–21), dealer showing card (1–10), usable ace flag (0 or 1)]`
+    - For **usable ace = 0:** Player sums range from 4 to 20 (21 is terminal).
+    - For **usable ace = 1:** The saved player sum is between 2 and 10, and the actual sum is computed as `saved_sum + 10` (displayed as 12–20).
+  - **Action Space:**  
+    Only two actions are allowed: HIT and STK.
+  - **Visualization:**  
+    Two strategy charts are generated (one for each usable ace case) using heatmaps with the improved "viridis" color grading. Rows represent the actual player sum and columns represent the dealer’s card (with 1 shown as "A"). 🎨
 
+- **Strategy Chart Images:**
+
+  - **Extended–Action Model:**
+    ![monte-carlo-with-extended-action-space-and-rewards](https://github.com/JaishreeramCoder/blackjack/blob/master/monte-carlo/strategy-chart-visualization/monte-carlo-with-extended-action-space-and-rewards.png)
+
+  - **Simple blackjack-v1 Model:**
+    ![monte-carlo-blackjack-v1](https://github.com/JaishreeramCoder/blackjack/blob/master/monte-carlo/strategy-chart-visualization/monte-carlo-blackjack-v1.png)
