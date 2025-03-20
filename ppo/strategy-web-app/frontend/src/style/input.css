@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+.modal-md-half {
+    width: 100%;
+}
+@media (min-width: 768px) {
+    .modal-md-half {
+      width: 50%;
+    }
+}
+
+/* Base state remains as grid-cols-2 (which you already have) */
+.grid-cols-md-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));  
+}
+
+@media (min-width: 768px) {
+    .grid-cols-md-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+  
+  

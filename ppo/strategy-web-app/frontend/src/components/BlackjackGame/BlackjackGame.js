@@ -15,7 +15,7 @@ const CardModal = ({
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div
-                className="w-11/12 md:w-1/2 rounded-2xl shadow-2xl overflow-hidden relative"
+                className="w-11/12 modal-md-half rounded-2xl shadow-2xl overflow-hidden relative"
                 style={{
                     backgroundImage: `url(${background})`,
                     backgroundSize: "cover",
@@ -38,7 +38,7 @@ const CardModal = ({
                                 className={`py-4 px-6 rounded-lg transition transform duration-200 ${
                                     isCardDisabled(card)
                                         ? "bg-gray-400 text-white cursor-not-allowed"
-                                        : "bg-blue-500 text-white hover:shadow-2xl && cursor-pointer hover:scale-105"
+                                        : "bg-blue-500 text-white hover:shadow-2xl cursor-pointer hover:scale-105"
                                 }`}
                             >
                                 {card}
@@ -49,14 +49,13 @@ const CardModal = ({
                         <div className="relative p-4 flex justify-end">
                             <button
                                 onClick={onClose}
-                                className="text-white hover:text-blue-500 && cursor-pointer font-medium"
+                                className="text-white hover:text-blue-500 cursor-pointer font-medium"
                             >
                                 Close
                             </button>
                         </div>
                     )}
                 </div>
-                
             </div>
         </div>
     );
@@ -138,11 +137,11 @@ const BlackjackGame = () => {
     // Fetch best action when dealer and initial two cards are selected
     useEffect(() => {
         if (disableActions) return;
-
+    
         if (dealerCard && playerCards.length >= 2) {
             const stateArray = computeState();
             const playerSum = stateArray[0];
-
+    
             if (playerSum > 21) {
                 setActionMessage("You have lost the game because busted.");
                 setDisableActions(true);
@@ -150,19 +149,29 @@ const BlackjackGame = () => {
                 setActionMessage("You have got natural blackjack.");
                 setDisableActions(true);
             } else {
-                fetch("http://localhost:8000/advisor/predict/", {
+                const requestOptions = {
                     method: "POST",
                     mode: "cors",
                     headers: {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({ state: stateArray })
-                })
-                    .then(response => {
+                };
+    
+                const fetchFromUrl = (url) => {
+                    return fetch(url, requestOptions).then(response => {
                         if (!response.ok) {
                             throw new Error(`Server error: ${response.statusText}`);
                         }
                         return response.json();
+                    });
+                };
+    
+                fetchFromUrl("http://localhost:8000/advisor/predict/")
+                    .catch(localError => {
+                        console.error("Error fetching from localhost:", localError);
+                        // Fallback to alternative URL
+                        return fetchFromUrl("https://blackjack-awh6.onrender.com/advisor/predict/");
                     })
                     .then(data => {
                         const action = data.action;
@@ -192,6 +201,7 @@ const BlackjackGame = () => {
             }
         }
     }, [dealerCard, playerCards, disableActions]);
+    
 
     const startGame = () => {
         setDealerCard(null);
@@ -319,23 +329,23 @@ const BlackjackGame = () => {
 
                     {/* Row 4: Action Buttons */}
                     {actionMessage && playerCards.length >= 2 && !disableActions && (
-                        <div className="mb-6 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-xl">
+                        <div className="mb-6 grid grid-cols-2 sm:grid-cols-2 grid-cols-md-4 gap-4 w-full max-w-xl">
                             <button
                                 onClick={() => handleActionWithCard("hit")}
-                                className="bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600 && cursor-pointer transition-colors text-lg transform hover:scale-105"
+                                className="bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600 cursor-pointer transition-colors text-lg transform hover:scale-105"
                             >
                                 Hit
                             </button>
                             <button
                                 onClick={handleStandClick}
-                                className="bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600 && cursor-pointer transition-colors text-lg transform hover:scale-105"
+                                className="bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600 cursor-pointer transition-colors text-lg transform hover:scale-105"
                             >
                                 Stand
                             </button>
                             <button
                                 disabled={!isFirstMove}
                                 onClick={() => handleActionWithCard("double")}
-                                className={`bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600 && cursor-pointer transition-colors text-lg transform hover:scale-105 ${
+                                className={`bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600 cursor-pointer transition-colors text-lg transform hover:scale-105 ${
                                     !isFirstMove ? "opacity-50 cursor-not-allowed" : ""
                                 }`}
                             >
@@ -344,7 +354,7 @@ const BlackjackGame = () => {
                             <button
                                 disabled={!isFirstMove}
                                 onClick={handleSurrenderClick}
-                                className={`bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600 && cursor-pointer transition-colors text-lg transform hover:scale-105 ${
+                                className={`bg-blue-500 text-white py-3 px-6 rounded hover:bg-blue-600 cursor-pointer transition-colors text-lg transform hover:scale-105 ${
                                     !isFirstMove ? "opacity-50 cursor-not-allowed" : ""
                                 }`}
                             >
@@ -352,6 +362,7 @@ const BlackjackGame = () => {
                             </button>
                         </div>
                     )}
+
 
                     {/* Restart Button placed below action buttons */}
                     <button
