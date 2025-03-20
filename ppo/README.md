@@ -86,7 +86,8 @@ Evaluation scripts also render graphical outputs (plots and tables) and save the
 ## Web Application 🌐
 
 A Streamlit web application is available for real-time predictions from the trained model.  
-Access the web app here: [https://..link] 🔗
+Access the web app here: [Blackjack Advisor](https://blackjack-beta-kohl.vercel.app/) 🔗
+
 
 To run the app locally:
 ```bash
