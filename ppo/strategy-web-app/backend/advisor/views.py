@@ -232,3 +232,11 @@ class PredictBlackjackAPIView(APIView):
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# views.py
+from django.http import JsonResponse
+
+def health(request):
+    return JsonResponse({"status": "ok"})
+

@@ -137,11 +137,11 @@ const BlackjackGame = () => {
     // Fetch best action when dealer and initial two cards are selected
     useEffect(() => {
         if (disableActions) return;
-    
+
         if (dealerCard && playerCards.length >= 2) {
             const stateArray = computeState();
             const playerSum = stateArray[0];
-    
+
             if (playerSum > 21) {
                 setActionMessage("You have lost the game because busted.");
                 setDisableActions(true);
@@ -155,9 +155,10 @@ const BlackjackGame = () => {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ state: stateArray })
+                    // Updated key to "observation" as expected by your API.
+                    body: JSON.stringify({ observation: stateArray })
                 };
-    
+
                 const fetchFromUrl = (url) => {
                     return fetch(url, requestOptions).then(response => {
                         if (!response.ok) {
@@ -166,12 +167,12 @@ const BlackjackGame = () => {
                         return response.json();
                     });
                 };
-    
+
+                // First attempt localhost, then fallback to Hugging Face predict URL.
                 fetchFromUrl("http://localhost:8000/advisor/predict/")
                     .catch(localError => {
                         console.error("Error fetching from localhost:", localError);
-                        // Fallback to alternative URL
-                        return fetchFromUrl("https://blackjack-awh6.onrender.com/advisor/predict/");
+                        return fetchFromUrl("https://jaishreeramcoder-my-blackjack-api.hf.space/predict");
                     })
                     .then(data => {
                         const action = data.action;
