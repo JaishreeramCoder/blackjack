@@ -85,14 +85,8 @@ Evaluation scripts also render graphical outputs (plots and tables) and save the
 <a id="web-application"></a>
 ## Web Application 🌐
 
-A Streamlit web application is available for real-time predictions from the trained model.  
+A web application is built with a React frontend and styled using Tailwind CSS. The FastAPI backend provides real-time predictions from the trained model.
 Access the web app here: [Blackjack Advisor](https://blackjack-beta-kohl.vercel.app/) 🔗
-
-
-To run the app locally:
-```bash
-streamlit run app.py
-```
 
 <a id="additional-models--results"></a>
 ## Additional Models & Results 🔍
