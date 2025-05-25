@@ -39,6 +39,12 @@ For setup, training, and evaluation instructions, see the detailed READMEs in ea
 * `monte-carlo/README.md` 📄
 * `ppo/README.md` 📄
 
+**LLM & RLHF Code:**
+
+Code and related resources for the Large Language Model / RLHF component of the thesis are available here:
+
+➡️ [Masters-Thesis-Project1](https://github.com/JaishreeramCoder/Masters-Thesis-Project1)
+
 ## 📄 Full Thesis Report
 
 For complete methodology, experiment details, and in-depth discussion of both the RLHF and Blackjack parts of the thesis, see the full report:
