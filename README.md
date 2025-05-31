@@ -31,6 +31,13 @@ This repository contains implementations and training code for Reinforcement Lea
 * Monte Carlo converges quickly in simple settings but struggles with large state spaces.
 * PPO excels when card counting is enabled, achieving a +2.36 % average return.
 * Group Relative Policy Optimization (GRPO) with DAPO achieves the highest win rate (44.39 %) in the card-counting scenario.
+<a id="web-application"></a>
+## Web Application 🌐
+
+A web application is built with a React frontend and styled using Tailwind CSS. The FastAPI backend provides real-time predictions from the trained model.
+Access the web app here: [Blackjack Advisor](https://blackjack-beta-kohl.vercel.app/) 🔗
+
+<a id="additional-models--results"></a>
 
 ## 🚀 Getting Started
 
